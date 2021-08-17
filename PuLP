@@ -1,0 +1,39 @@
+!pip install pulp
+
+from pulp import *
+
+
+"""Tip . .
+In our example,
+X1 - refers to tables,
+X2 - refers to chairs, and
+Z - refers to profit.
+
+Information for the wooden tables and chairs linear programming
+problem: 
+    
+Maximize: Z = 6X1 + 8X2 (objective function)
+
+Subject to: 30X1 + 20X2 <= 300 (wood constraint: 300 bf available)
+
+            5X1 + 10X2 <= 110 (labor constraint: 110 hours available)
+
+            X1 , X2 > 0 (nonnegativity conditions)"""
+            
+            
+prob = LpProblem("Giopetto", LpMaximize)
+x1 = LpVariable("x1", lowBound=0, cat="Integer")
+x2 = LpVariable("x2", lowBound=0, cat="Integer")
+prob += 6*x1 + 8*x2
+prob += 30*x1 + 20*x2 <=300
+prob += 5*x1 + 10*x2 <=100
+prob
+
+status = prob.solve()
+LpStatus[status]
+
+value(x1)
+
+value(x2)
+
+value(prob.objective)
